@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>DistriMaskotas - Pet Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #222;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      background: #1b4965;
+      color: #fff;
+      padding: 16px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      font-size: 0.95rem;
+    }
+
+    .btn-whatsapp-small {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #25d366;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-whatsapp-small span {
+      font-size: 1.1rem;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 40px 0 32px;
+      background: linear-gradient(135deg, #1b4965, #4cc9f0);
+      color: #fff;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      max-width: 480px;
+      margin-bottom: 18px;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-main {
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: #ffd166;
+      color: #1b4965;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn-ghost {
+      padding: 11px 16px;
+      border-radius: 999px;
+      background: transparent;
+      color: #fff;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.6);
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .hero-image {
+      background: #ffffff11;
+      border-radius: 18px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,0.3);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .hero-image-illus {
+      height: 170px;
+      border-radius: 14px;
+      background: repeating-linear-gradient(
+        -45deg,
+        #ffc8dd,
+        #ffc8dd 10px,
+        #bde0fe 10px,
+        #bde0fe 20px
+      );
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    /* CATEGORÍAS */
+    .section {
+      padding: 32px 0;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .section-subtitle {
+      font-size: 0.93rem;
+      color: #555;
+      margin-bottom: 18px;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px;
+    }
+
+    .category-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+      border: 1px solid #eee;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .category-card-title {
+      font-weight: 700;
+      font-size: 0.98rem;
+    }
+
+    .category-chip {
+      display: inline-block;
+      font-size: 0.78rem;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #444;
+    }
+
+    /* PRODUCTOS DESTACADOS */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 14px;
+      border: 1px solid #eee;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .product-image {
+      height: 140px;
+      border-radius: 12px;
+      background: #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+    }
+
+    .product-brand {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .product-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .product-desc {
+      font-size: 0.82rem;
+      color: #555;
+      margin-bottom: 4px;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 4px;
+      gap: 4px;
+    }
+
+    .product-price {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: #1b4965;
+    }
+
+    .product-kg {
+      font-size: 0.78rem;
+      color: #64748b;
+    }
+
+    .product-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      gap: 8px;
+    }
+
+    .btn-add {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: none;
+      background: #1b4965;
+      color: #fff;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-outline {
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px dashed #94a3b8;
+      background: transparent;
+      color: #475569;
+      font-size: 0.8rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* INFO & CONTACTO */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .info-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid #eee;
+      font-size: 0.9rem;
+    }
+
+    .info-card h3 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .info-list {
+      list-style: none;
+      margin-top: 6px;
+    }
+
+    .info-list li {
+      margin-bottom: 4px;
+      font-size: 0.86rem;
+    }
+
+    footer {
+      padding: 18px 0 26px;
+      font-size: 0.78rem;
+      color: #64748b;
+      text-align: center;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero-content {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero {
+        padding-top: 24px;
+      }
+
+      .hero-title {
+        font-size: 1.6rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <div class="logo">DistriMaskotas Pet Shop</div>
+      <nav class="nav-links">
+        <a href="#productos">Productos</a>
+        <a href="#categorias">Categorías</a>
+        <a href="#envios">Envíos</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <!-- CAMBIAR EL NÚMERO DE WHATSAPP -->
+      <a
+        href="https://wa.me/5490000000000?text=Hola%20quiero%20hacer%20un%20pedido%20de%20alimento%20para%20mi%20mascota"
+        class="btn-whatsapp-small"
+        target="_blank"
+      >
+        <span>🟢</span> Pedir por WhatsApp
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-content">
+      <div>
+        <h1 class="hero-title">Todo para tu mascota, con envíos a domicilio 🐶🐱</h1>
+        <p class="hero-subtitle">
+          Alimentos de primeras marcas, accesorios y más. Hacé tu pedido online
+          y recibilo en casa o retiralo por el local.
+        </p>
+        <div class="hero-badges">
+          <span class="badge">Pro Plan · Excellent · Professional Vet</span>
+          <span class="badge">Envíos en la ciudad</span>
+          <span class="badge">Pagá con transferencia o efectivo</span>
+        </div>
+        <div class="hero-actions">
+          <a href="#productos">
+            <button class="btn-main">Ver productos destacados</button>
+          </a>
+          <a
+            href="https://wa.me/5490000000000?text=Hola%20quiero%20hacer%20un%20pedido%20o%20consultar%20precios"
+            target="_blank"
+          >
+            <button class="btn-ghost">Escribinos por WhatsApp</button>
+          </a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-image-illus">
+          🐕 🐈
+        </div>
+        <p>Tu tienda online de confianza para el alimento y cuidado de tus mascotas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS -->
+  <section class="section" id="categorias">
+    <div class="container">
+      <h2 class="section-title">Categorías</h2>
+      <p class="section-subtitle">
+        Organizá tus productos por tipo de mascota o por necesidad. Acá podés ir agregando más.
+      </p>
+      <div class="categories">
+        <div class="category-card">
+          <div class="category-card-title">Perros</div>
+          <div class="category-chip">Alimento · Snacks · Accesorios</div>
+          <p>Alimento premium, collares, cuchas, juguetes y más.</p>
+        </div>
+        <div class="category-card">
+          <div class="category-card-title">Gatos</div>
+          <div class="category-chip">Alimento · Piedras · Rascadores</div>
+          <p>Todo para que tu gato viva cómodo y feliz.</p>
+        </div>
+        <div class="category-card">
+          <div class="category-card-title">Higiene</div>
+          <div class="category-chip">Piedras · Shampoo · Limpieza</div>
+          <p>Productos para mantener limpio tu hogar y tu mascota.</p>
+        </div>
+        <div class="category-card">
+          <div class="category-card-title">Ofertas</div>
+          <div class="category-chip">Promos por bulto</div>
+          <p>Descuentos por cantidad y combos especiales.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS DESTACADOS -->
+  <section class="section" id="productos">
+    <div class="container">
+      <h2 class="section-title">Productos destacados</h2>
+      <p class="section-subtitle">
+        Podés ir reemplazando estos productos por los tuyos, modificando nombre, precio y descripción.
+      </p>
+      <div class="products-grid">
+        <!-- PRODUCTO 1 -->
+        <div class="product-card">
+          <div>
+            <div class="product-image">Foto alimento perro 21 kg</div>
+            <div class="product-brand">Pro Plan</div>
+            <div class="product-name">Perro Adulto Raza Mediana</div>
+            <p class="product-desc">
+              Fórmula premium para perros adultos. Ideal para uso diario.
+            </p>
+          </div>
+          <div>
+            <div class="product-meta">
+              <span class="product-price">$00.000</span>
+              <span class="product-kg">Bolsa 21 kg</span>
+            </div>
+            <div class="product-actions">
+              <a
+                href="https://wa.me/5490000000000?text=Hola%20quiero%20este%20producto:%20Pro%20Plan%20Perro%20Adulto%20Raza%20Mediana%2021kg"
+                target="_blank"
+              >
+                <button class="btn-add">Pedir por WhatsApp</button>
+              </a>
+              <button class="btn-outline">Agregar a lista</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRODUCTO 2 -->
+        <div class="product-card">
+          <div>
+            <div class="product-image">Foto alimento gato 7.5 kg</div>
+            <div class="product-brand">Excellent</div>
+            <div class="product-name">Gato Adulto</div>
+            <p class="product-desc">
+              Alimento completo y balanceado para gatos adultos.
+            </p>
+          </div>
+          <div>
+            <div class="product-meta">
+              <span class="product-price">$00.000</span>
+              <span class="product-kg">Bolsa 7.5 kg</span>
+            </div>
+            <div class="product-actions">
+              <a
+                href="https://wa.me/5490000000000?text=Hola%20quiero%20este%20producto:%20Excellent%20Gato%20Adulto%207.5kg"
+                target="_blank"
+              >
+                <button class="btn-add">Pedir por WhatsApp</button>
+              </a>
+              <button class="btn-outline">Agregar a lista</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRODUCTO 3 -->
+        <div class="product-card">
+          <div>
+            <div class="product-image">Foto piedras sanitarias</div>
+            <div class="product-brand">Professional Vet</div>
+            <div class="product-name">Piedras sanitarias premium</div>
+            <p class="product-desc">
+              Alto poder de absorción y control de olores para gatos.
+            </p>
+          </div>
+          <div>
+            <div class="product-meta">
+              <span class="product-price">$00.000</span>
+              <span class="product-kg">Bolsa 4 kg</span>
+            </div>
+            <div class="product-actions">
+              <a
+                href="https://wa.me/5490000000000?text=Hola%20quiero%20este%20producto:%20Piedras%20sanitarias%20Professional%20Vet%204kg"
+                target="_blank"
+              >
+                <button class="btn-add">Pedir por WhatsApp</button>
+              </a>
+              <button class="btn-outline">Agregar a lista</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRODUCTO 4 -->
+        <div class="product-card">
+          <div>
+            <div class="product-image">Foto snacks / premios</div>
+            <div class="product-brand">Snacks</div>
+            <div class="product-name">Premios para perro</div>
+            <p class="product-desc">
+              Ideal para entrenar y mimar a tu mascota todos los días.
+            </p>
+          </div>
+          <div>
+            <div class="product-meta">
+              <span class="product-price">$00.000</span>
+              <span class="product-kg">Pack x unidades</span>
+            </div>
+            <div class="product-actions">
+              <a
+                href="https://wa.me/5490000000000?text=Hola%20quiero%20este%20producto:%20Snacks%20para%20perro"
+                target="_blank"
+              >
+                <button class="btn-add">Pedir por WhatsApp</button>
+              </a>
+              <button class="btn-outline">Agregar a lista</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INFO / ENVÍOS / CONTACTO -->
+  <section class="section" id="envios">
+    <div class="container info-grid">
+      <div class="info-card">
+        <h3>Envíos</h3>
+        <ul class="info-list">
+          <li>🚚 Envíos dentro de la ciudad y zonas cercanas.</li>
+          <li>✅ Pedidos por WhatsApp o desde la web.</li>
+          <li>📦 Entrega coordinada en el día o al día siguiente.</li>
+        </ul>
+      </div>
+      <div class="info-card" id="contacto">
+        <h3>Contacto</h3>
+        <ul class="info-list">
+          <li>📍 Dirección: (agregar dirección del local)</li>
+          <li>📱 WhatsApp: +54 9 0000 000000</li>
+          <li>🕒 Horarios: Lunes a Sábado (agregar horario)</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Formas de pago</h3>
+        <ul class="info-list">
+          <li>💵 Efectivo</li>
+          <li>🏦 Transferencia bancaria</li>
+          <li>💳 Consultar por otros medios</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> DistriMaskotas Pet Shop. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    // Año automático en el footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
